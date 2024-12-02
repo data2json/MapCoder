@@ -55,8 +55,8 @@ class OpenAIBaseModel(BaseModel):
         api_key=None,
         engine_name=None,
         model_name=None,
-        temperature=0,
-        top_p=0.95,
+        temperature=0.1,
+        top_p=0.1,
         frequency_penalty=0,
         presence_penalty=0,
     ):
@@ -95,7 +95,7 @@ class OpenAIBaseModel(BaseModel):
                 azure_endpoint=api_base
             )
         else:
-            self.openai = OpenAI(api_key=api_key)
+            self.openai = OpenAI(api_key=api_key,base_url=api_base)
         
         # GPT parameters
         self.model_params = {}
@@ -135,8 +135,8 @@ class OpenAIModel(OpenAIBaseModel):
         api_key=None,
         engine_name=None,
         model_name=None,
-        temperature=0.32,
-        top_p=0.95,
+        temperature=0.1,
+        top_p=0.1,
         frequency_penalty=0,
         presence_penalty=0,
     ):
@@ -186,7 +186,7 @@ class OpenAIModel(OpenAIBaseModel):
             Response from the openai python library
 
         """
-        self.model_params["max_tokens"] = 4096
+        self.model_params["max_tokens"] = 8192
 
         response = self.openai.chat.completions.create(
             messages=processed_input,
@@ -204,5 +204,5 @@ class GPT4(OpenAIModel):
 
 class ChatGPT(OpenAIModel):
     def prompt(self, processed_input: list[dict]):
-        self.model_params["model"] = "GPT-35-TURBO-1106"
+        self.model_params["model"] = "gpt-3.5-turbo"
         return super().prompt(processed_input)

@@ -14,7 +14,7 @@ class DirectStrategy(BaseStrategy):
         processed_input = [
             {
                 "role": "user",
-                "content": f'{self.data.get_prompt(item)}\n\Generate {self.language} code to solve the above mentioned problem:',
+                "content": f'{self.data.get_prompt(item)}\n\nGenerate {self.language} code to solve the above mentioned problem:',
             },
         ]
         return self.gpt_chat(processed_input=processed_input)
